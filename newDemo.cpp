@@ -28,6 +28,12 @@ vtkPolyData *TransformPolyData(vtkPolyData *sourcePolydata, vtkMatrix4x4 *matrix
 vtkPolyData *ApplyRandomOffset(vtkPolyData *polydata); // 新增函数，给点集添加随机偏移
 void DisplayPolyData(vtkPolyData *targetPolydata, vtkPolyData *sourcePolydata, vtkPolyData *alignedPolydata);
 
+/**
+ * @brief 使用 ICP 算法配准源点集和目标点集，
+ *        并在窗口中显示目标点集、源点集和配准后的点集
+ *
+ * @return 0 if success
+ */
 int main()
 {
     vtkPolyData *TargetPolydata = CreatePolyData();                // 创建目标点集
@@ -71,6 +77,14 @@ int main()
     return 0;
 }
 
+/**
+ * @brief 该函数创建一个包含5个点的点集
+ *
+ * 该函数返回一个包含5个点的点集，点集的点坐标如下:
+ * (0,0,0), (1,0,0), (0,1,0), (1,1,0), (0.5,0.5,0)
+ *
+ * @return 一个包含5个点的点集
+ */
 vtkPolyData *CreatePolyData()
 {
     // 此函数创建一个包含5个点的点集
@@ -105,6 +119,12 @@ vtkPolyData *CreatePolyData()
     return polydata;
 }
 
+/**
+ * @brief 对输入的点集进行随机扰动，避免点集重叠
+ *
+ * @param[in] OldPolydata 输入的点集
+ * @return 扰动后的点集
+ */
 vtkPolyData *PerturbPolyData(vtkPolyData *OldPolydata)
 {
     vtkPolyData *polydata = vtkPolyData::New();
@@ -130,6 +150,15 @@ vtkPolyData *PerturbPolyData(vtkPolyData *OldPolydata)
     return polydata;
 }
 
+/**
+ * @brief 将点集中的每个点都进行小的随机偏移，避免重叠
+ *
+ * 该函数遍历输入点集中每个点，并在x和y方向上添加小的随机偏移，避免点重叠。
+ * 偏移量的绝对值小于0.05。
+ *
+ * @param[in] polydata 输入点集
+ * @return 带有随机偏移的点集
+ */
 vtkPolyData *ApplyRandomOffset(vtkPolyData *polydata)
 {
     // 给点集应用小的随机偏移，避免重叠
@@ -146,6 +175,15 @@ vtkPolyData *ApplyRandomOffset(vtkPolyData *polydata)
     return polydata;
 }
 
+/**
+ * @brief 对源点云应用仿射变换矩阵。
+ *
+ * 该函数将源vtkPolyData作为输入，并将给定的仿射变换矩阵应用于生成一个新的变换后的vtkPolyData。
+ *
+ * @param[in] sourcePolydata 输入点云以进行仿射变换。
+ * @param[in] matrix 仿射变换矩阵。
+ * @return 一个新的vtkPolyData，包含变换后的点。
+ */
 vtkPolyData *TransformPolyData(vtkPolyData *sourcePolydata, vtkMatrix4x4 *matrix)
 {
     vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
@@ -161,6 +199,17 @@ vtkPolyData *TransformPolyData(vtkPolyData *sourcePolydata, vtkMatrix4x4 *matrix
     return transformedPolydata;
 }
 
+/**
+ * @brief 在窗口中显示目标点集、源点集和配准后的点集。
+ *
+ * 该函数创建一个渲染窗口，并将目标点集、源点集和配准后的点集以不同颜色渲染出来。
+ * 目标点集显示为蓝色，源点集显示为红色，配准后的点集显示为绿色。
+ * 所有点集的点大小均设置为10。
+ *
+ * @param[in] targetPolydata 目标点集，用于渲染的vtkPolyData。
+ * @param[in] sourcePolydata 源点集，用于渲染的vtkPolyData。
+ * @param[in] alignedPolydata 配准后的点集，用于渲染的vtkPolyData。
+ */
 void DisplayPolyData(vtkPolyData *targetPolydata, vtkPolyData *sourcePolydata, vtkPolyData *alignedPolydata)
 {
     vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
