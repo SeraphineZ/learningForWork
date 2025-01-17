@@ -70,6 +70,16 @@ int main()
     icptrans->Modified();
     icptrans->Update();
 
+    vtkMatrix4x4 *M = icptrans->GetMatrix();
+    cout << "The resulting matrix is: " << *M << endl;
+    for (int i = 0; i <= 3; i++)
+    {
+        printf("\n");
+        for (int j = 0; j <= 3; j++)
+        {
+            printf("%e\t", M->Element[i][j]);
+        }
+    }
     // 配准矩阵调整源数据
     vtkSmartPointer<vtkTransformPolyDataFilter> solution =
         vtkSmartPointer<vtkTransformPolyDataFilter>::New();
