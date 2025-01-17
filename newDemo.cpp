@@ -74,3 +74,27 @@ vtkPolyData *CreatePolyData()
     polydata->SetVerts(SourceVertices);
     return polydata;
 }
+
+vtkPolyData *PerturbPolyData(vtkPolyData *OldPolydata)
+{ /*给每个点加入扰动，我加的扰动是把原来的点绕Y轴顺时针旋转45度（从Z轴负向看）
+    其结果是第1，3，4点的x，z坐标改变了，而第0，2点坐标没变化，因为这两个点在Y轴上，绕Y轴旋转对他们没影响*/
+    vtkPolyData *polydata = vtkPolyData::New();
+    polydata->DeepCopy(OldPolydata);
+    vtkPoints *Points = polydata->GetPoints();
+    size_t Sum = Points->GetNumberOfPoints();
+
+    double p[3];
+    Points->GetPoint(1, p);
+    p[0] = sqrt(2.0) / 2.0;
+    p[2] = sqrt(2.0) / 2.0;
+    Points->SetPoint(1, p); ///
+    Points->GetPoint(3, p);
+    p[0] = sqrt(2.0) / 2.0;
+    p[2] = sqrt(2.0) / 2.0;
+    Points->SetPoint(3, p); //
+    Points->GetPoint(4, p);
+    p[0] = sqrt(2.0) / 4.0;
+    p[2] = sqrt(2.0) / 4.0;
+    Points->SetPoint(4, p); //
+    return polydata;
+}
