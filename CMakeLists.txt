@@ -41,17 +41,36 @@ add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 # 添加目标程序
-add_executable(forTest octreeDemo.cpp)
-target_include_directories(forTest PRIVATE 
+add_executable(main main.cpp)
+add_executable(newDemo newDemo.cpp)
+add_executable(octreeDemo octreeDemo.cpp)
+
+target_include_directories(main PRIVATE 
   ${Boost_INCLUDE_DIRS} 
   ${Eigen3_INCLUDE_DIRS} 
   ${VTK_INCLUDE_DIRS})
-target_link_libraries(forTest PRIVATE 
+target_link_libraries(main PRIVATE 
+  ${Boost_LIBRARIES} 
+  ${VTK_LIBRARIES})
+
+target_include_directories(newDemo PRIVATE 
+  ${Boost_INCLUDE_DIRS} 
+  ${Eigen3_INCLUDE_DIRS} 
+  ${VTK_INCLUDE_DIRS})
+target_link_libraries(newDemo PRIVATE 
+  ${Boost_LIBRARIES} 
+  ${VTK_LIBRARIES})
+
+target_include_directories(octreeDemo PRIVATE 
+  ${Boost_INCLUDE_DIRS} 
+  ${Eigen3_INCLUDE_DIRS} 
+  ${VTK_INCLUDE_DIRS})
+target_link_libraries(octreeDemo PRIVATE 
   ${Boost_LIBRARIES} 
   ${VTK_LIBRARIES})
 
 # VTK 自动初始化
 include(${VTK_USE_FILE})
 vtk_module_autoinit(
-  TARGETS forTest
+  TARGETS main newDemo octreeDemo
   MODULES ${VTK_LIBRARIES})
