@@ -1,42 +1,17 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "cppvsdbg",
-            "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}/build/Debug/forTest.exe",
-            "stopAtEntry": true,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "console": "externalTerminal",
-            "preLaunchTask": "build",
-            "args": [], // 这里可以添加程序启动时的参数
-            "symbolSearchPath": "", // 这里可以指定符号文件的搜索路径
-            "externalConsole": true // 是否使用外部控制台
-        }
-    ],
-    "inputs": [
-        {
-            "type": "promptString",
-            "id": "executablePath",
-            "description": "Path to your executable"
-        }
-    ],
-    "tasks": {
-        "version": "2.0.0",
-        "tasks": [
-            {
-                "label": "build",
-                "type": "shell",
-                "command": "make", // 这里可以替换为你的构建命令
-                "args": [],
-                "group": {
-                    "kind": "build",
-                    "isDefault": true
-                },
-                "problemMatcher": ["$gcc"]
-            }
-        ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug octreeDemo",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/Debug/octreeDemo.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": true,
+      "preLaunchTask": "build"
     }
+  ]
 }
