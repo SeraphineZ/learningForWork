@@ -41,7 +41,7 @@ add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 # 添加目标程序
-add_executable(forTest newDemo.cpp)
+add_executable(forTest octreeDemo.cpp)
 target_include_directories(forTest PRIVATE 
   ${Boost_INCLUDE_DIRS} 
   ${Eigen3_INCLUDE_DIRS} 
